@@ -185,11 +185,11 @@ export default function Navbar() {
         </button>
 
         {/* Available badge in mobile menu */}
-        <div className="flex items-center gap-1.5 px-4 py-2 rounded-full border mb-2"
+        {/* <div className="flex items-center gap-1.5 px-4 py-2 rounded-full border mb-2"
           style={{ background: "rgba(16,185,129,0.07)", borderColor: "rgba(16,185,129,0.22)" }}>
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           <span className="text-xs font-mono font-semibold text-emerald-400">Available for Work</span>
-        </div>
+        </div> */}
 
         {navLinks.map((link) => (
           <button
