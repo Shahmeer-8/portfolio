@@ -205,13 +205,13 @@ export default function Hero() {
           <div className="space-y-7">
 
             {/* Available badge */}
-            <div className="h-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full"
+            {/* <div className="h-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full"
               style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-xs font-mono font-semibold text-emerald-400 tracking-wider">
                 Available for Work
               </span>
-            </div>
+            </div> */}
 
             {/* Name */}
             <div className="h-name">
