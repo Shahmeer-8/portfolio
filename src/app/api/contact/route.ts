@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
+const escapeHtml = (str: string) =>
+  str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -21,19 +24,38 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const { EMAIL_USER, EMAIL_PASS, RECEIVER_EMAIL } = process.env;
+    if (!EMAIL_USER || !EMAIL_PASS || !RECEIVER_EMAIL) {
+      console.error("Contact API: missing environment variables");
+      return NextResponse.json(
+        { error: "Server configuration error. Please try again later." },
+        { status: 500 }
+      );
+    }
+
+    const safeName    = escapeHtml(name);
+    const safeEmail   = escapeHtml(email);
+    const safeSubject = escapeHtml(subject);
+    const safeMessage = escapeHtml(message);
+
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: EMAIL_USER,
+        pass: EMAIL_PASS,
+      },
+      tls: {
+        rejectUnauthorized: true,
       },
     });
 
     await transporter.sendMail({
-      from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
-      to: process.env.RECEIVER_EMAIL,
+      from: `"Portfolio Contact" <${EMAIL_USER}>`,
+      to: RECEIVER_EMAIL,
       replyTo: email,
-      subject: `[Portfolio] ${subject}`,
+      subject: `[Portfolio] ${safeSubject}`,
       text: `New message from your portfolio contact form.\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`,
       html: `
         <div style="font-family:Inter,Arial,sans-serif;max-width:600px;margin:0 auto;background:#0f0f14;color:#e2e8f0;border-radius:12px;overflow:hidden">
@@ -45,24 +67,24 @@ export async function POST(req: NextRequest) {
             <table style="width:100%;border-collapse:collapse">
               <tr>
                 <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);width:90px;color:#94a3b8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;vertical-align:top">Name</td>
-                <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#e2e8f0;font-size:14px;font-weight:500">${name}</td>
+                <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#e2e8f0;font-size:14px;font-weight:500">${safeName}</td>
               </tr>
               <tr>
                 <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#94a3b8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;vertical-align:top">Email</td>
-                <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07)"><a href="mailto:${email}" style="color:#818cf8;font-size:14px;font-weight:500;text-decoration:none">${email}</a></td>
+                <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07)"><a href="mailto:${safeEmail}" style="color:#818cf8;font-size:14px;font-weight:500;text-decoration:none">${safeEmail}</a></td>
               </tr>
               <tr>
                 <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#94a3b8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;vertical-align:top">Subject</td>
-                <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#e2e8f0;font-size:14px;font-weight:500">${subject}</td>
+                <td style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);color:#e2e8f0;font-size:14px;font-weight:500">${safeSubject}</td>
               </tr>
               <tr>
                 <td style="padding:16px 0 0;color:#94a3b8;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;vertical-align:top">Message</td>
-                <td style="padding:16px 0 0;color:#e2e8f0;font-size:14px;line-height:1.7;white-space:pre-wrap">${message}</td>
+                <td style="padding:16px 0 0;color:#e2e8f0;font-size:14px;line-height:1.7;white-space:pre-wrap">${safeMessage}</td>
               </tr>
             </table>
           </div>
           <div style="padding:20px 40px;background:#0a0a0f;border-top:1px solid rgba(255,255,255,0.05);font-size:11px;color:#475569">
-            Reply directly to this email to respond to ${name}.
+            Reply directly to this email to respond to ${safeName}.
           </div>
         </div>
       `,
