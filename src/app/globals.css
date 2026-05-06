@@ -99,13 +99,17 @@ body {
 
 /* ─── Layout Utilities ──────────────────────────────────────── */
 @layer utilities {
-  .section-padding { padding: 7rem 0; }
+  .section-padding { padding: 4.5rem 0; }
+  @media (min-width: 640px)  { .section-padding { padding: 6rem 0; } }
+  @media (min-width: 1024px) { .section-padding { padding: 7rem 0; } }
 
   .container-custom {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
   }
+  @media (min-width: 480px)  { .container-custom { padding: 0 1.5rem; } }
+  @media (min-width: 1280px) { .container-custom { padding: 0 2rem; } }
 
   .grid-bg {
     background-image:
@@ -383,6 +387,10 @@ body {
   :root {
     --tw-bg-background: var(--color-bg);
   }
+
+  /* Offset anchor scroll so fixed navbar never covers headings */
+  section[id] { scroll-margin-top: 72px; }
+  @media (min-width: 768px) { section[id] { scroll-margin-top: 80px; } }
 
   .bg-background  { background-color: var(--color-bg); }
   .bg-surface     { background-color: var(--color-surface); }

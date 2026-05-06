@@ -83,13 +83,13 @@ export default function About() {
 
       <div className="container-custom">
         {/* Section heading */}
-        <div className="mb-16 text-center">
+        <div className="mb-10 sm:mb-16 text-center">
           <div className="section-label mx-auto">Who I Am</div>
           <h2 className="text-4xl sm:text-5xl font-black text-text">About Me</h2>
           <div className="w-12 h-0.5 bg-accent mx-auto mt-4" />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Image column */}
           <div ref={imageRef} className="flex justify-center lg:justify-end">
             <div className="relative">

@@ -62,10 +62,10 @@ export default function Footer() {
           backgroundSize: "128px 128px",
         }} />
 
-      <div className="container-custom pt-20 pb-10 relative z-10">
+      <div className="container-custom pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-10 relative z-10">
 
         {/* ── Main 3-col grid ── */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12 pb-16"
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 pb-10 sm:pb-14 lg:pb-16"
           style={{ borderBottom: "1px solid rgba(99,102,241,0.1)" }}>
 
           {/* Col 1 — Brand */}

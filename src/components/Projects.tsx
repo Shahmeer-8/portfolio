@@ -515,14 +515,14 @@ export default function Projects() {
 
       <div className="container-custom">
 
-        <div className="mb-20 text-center">
+        <div className="mb-10 sm:mb-16 lg:mb-20 text-center">
           <div className="section-label mx-auto">Portfolio</div>
           <h2 className="text-4xl sm:text-5xl font-black text-text">My Work</h2>
           <div className="w-12 h-0.5 bg-accent mx-auto mt-4" />
         </div>
 
         {/* Professional Work */}
-        <div className="mb-20">
+        <div className="mb-10 sm:mb-16 lg:mb-20">
           <div className="flex items-center gap-4 mb-8">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"

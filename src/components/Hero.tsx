@@ -198,7 +198,7 @@ export default function Hero() {
         style={{ background: "radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, rgba(0,0,0,0.15) 100%)" }} />
 
       {/* ── Content ── */}
-      <div ref={contentRef} className="container-custom relative z-10 w-full pt-28 pb-20">
+      <div ref={contentRef} className="container-custom relative z-10 w-full pt-24 sm:pt-28 pb-12 sm:pb-20">
         <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center">
 
           {/* ════ LEFT ════ */}
@@ -216,7 +216,7 @@ export default function Hero() {
             {/* Name */}
             <div className="h-name">
               <p className="text-text-muted font-medium mb-2 text-base">Hi, I&apos;m</p>
-              <h1 className="text-5xl sm:text-6xl xl:text-[4.5rem] font-black tracking-tight leading-[1.04]">
+              <h1 className="text-[2.25rem] sm:text-5xl xl:text-[4.5rem] font-black tracking-tight leading-[1.04]">
                 <span className="text-gradient-white block">Shah</span>
                 <span className="text-gradient block">Meer</span>
               </h1>
@@ -262,7 +262,7 @@ export default function Hero() {
             </div>
 
             {/* Stats */}
-            <div className="h-stats flex items-center gap-8 pt-2">
+            <div className="h-stats flex items-center gap-4 sm:gap-8 pt-2">
               {[
                 { value: "2+",  label: "Years Exp" },
                 { value: "10+", label: "Projects" },
@@ -280,18 +280,18 @@ export default function Hero() {
           </div>
 
           {/* ════ RIGHT — Visuals ════ */}
-          <div className="h-right relative flex items-center justify-center h-[500px] lg:h-[520px]">
+          <div className="h-right relative flex items-center justify-center h-[360px] sm:h-[460px] lg:h-[520px]">
 
             {/* Decorative rings */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[380px] h-[380px] rounded-full animate-spin-slow"
+              <div className="w-[260px] h-[260px] sm:w-[380px] sm:h-[380px] rounded-full animate-spin-slow"
                 style={{ border: "1px solid rgba(99,102,241,0.09)" }} />
-              <div className="absolute w-[300px] h-[300px] rounded-full animate-spin-slow-r"
+              <div className="absolute w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] rounded-full animate-spin-slow-r"
                 style={{ border: "1px solid rgba(99,102,241,0.06)" }} />
-              <div className="absolute w-[220px] h-[220px] rounded-full"
+              <div className="absolute w-[148px] h-[148px] sm:w-[220px] sm:h-[220px] rounded-full"
                 style={{ border: "1px solid rgba(99,102,241,0.1)" }} />
               {/* Glow center */}
-              <div className="absolute w-[200px] h-[200px] rounded-full pointer-events-none"
+              <div className="absolute w-[140px] h-[140px] sm:w-[200px] sm:h-[200px] rounded-full pointer-events-none"
                 style={{
                   background: "radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)",
                   filter: "blur(20px)",
@@ -319,7 +319,7 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="absolute top-[48px] left-[8px] animate-float-2" style={{ animationDelay: "1.5s" }}>
+            <div className="absolute top-[48px] left-[8px] animate-float-2 hidden sm:block" style={{ animationDelay: "1.5s" }}>
               <div className="card px-4 py-3 flex items-center gap-3 w-[162px]">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-black text-white flex-shrink-0"
                   style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)" }}>▲</div>
@@ -341,7 +341,7 @@ export default function Hero() {
               </div>
             </div>
 
-            <div className="absolute bottom-[78px] left-[4px] animate-float-4" style={{ animationDelay: "0.8s" }}>
+            <div className="absolute bottom-[78px] left-[4px] animate-float-4 hidden sm:block" style={{ animationDelay: "0.8s" }}>
               <div className="card px-4 py-3 flex items-center gap-3 w-[162px]">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
                   style={{ background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.22)" }}>🔌</div>
