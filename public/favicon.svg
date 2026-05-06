@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <title>Shah Meer</title>
+  <defs>
+    <linearGradient id="smfav" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect width="32" height="32" rx="7" fill="url(#smfav)"/>
+  <!-- S letterform — matches navbar SMLogo scaled to 32×32 -->
+  <path d="M11 9C11 9 2 9 2 13C2 17 11 17 11 21C11 25 2 25 2 23"
+    stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- M letterform — left stroke, center peak, right stroke -->
+  <path d="M15 23L15 8L22 18L29 8L29 23"
+    stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
