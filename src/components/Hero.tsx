@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTheme } from "@/components/ThemeProvider";
+
+const HeroAnimation = dynamic(() => import("@/components/HeroAnimation"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -161,6 +164,9 @@ export default function Hero() {
     >
       {/* ── Layered background ── */}
       <div className="absolute inset-0 bg-background" />
+
+      {/* Lottie animation — mounted client-only, behind all other layers */}
+      <HeroAnimation />
 
       {/* Grid pattern */}
       <div className="absolute inset-0 grid-bg pointer-events-none opacity-50" />
