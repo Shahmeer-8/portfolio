@@ -1,0 +1,411 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CSS VARIABLES — light theme (default) / dark theme via .dark
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --color-bg:          #EDEDED;
+  --color-surface:     #ffffff;
+  --color-surface-2:   #f4f4f4;
+  --color-border:      rgba(0, 0, 0, 0.08);
+  --color-text:        #0a0a0a;
+  --color-text-muted:  #525252;
+  --color-text-dim:    #9ca3af;
+
+  --card-bg:           rgba(255, 255, 255, 0.85);
+  --card-border:       rgba(0, 0, 0, 0.07);
+  --card-shadow:       0 2px 16px rgba(0,0,0,0.07), 0 1px 0 rgba(255,255,255,0.9) inset;
+  --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(99,102,241,0.2);
+
+  --glass-bg:          rgba(237, 237, 237, 0.88);
+  --glass-border:      rgba(0, 0, 0, 0.06);
+
+  --btn-outline-color: #0a0a0a;
+  --btn-outline-bg:    rgba(0, 0, 0, 0.04);
+  --btn-outline-border:rgba(0, 0, 0, 0.14);
+  --btn-outline-hover-bg: rgba(0, 0, 0, 0.08);
+  --btn-outline-hover-border: rgba(0, 0, 0, 0.22);
+
+  --grid-color:        rgba(99, 102, 241, 0.055);
+  --scrollbar-track:   #EDEDED;
+
+  /* Section separation */
+  --section-gap:       7rem;
+}
+
+.dark {
+  --color-bg:          #060609;
+  --color-surface:     #0e0e1a;
+  --color-surface-2:   #13131f;
+  --color-border:      rgba(255, 255, 255, 0.07);
+  --color-text:        #f1f5f9;
+  --color-text-muted:  #8892a4;
+  --color-text-dim:    #4b5563;
+
+  --card-bg:           rgba(255, 255, 255, 0.028);
+  --card-border:       rgba(255, 255, 255, 0.07);
+  --card-shadow:       0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  --card-shadow-hover: 0 12px 48px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(99,102,241,0.2), 0 0 20px rgba(99,102,241,0.08);
+
+  --glass-bg:          rgba(6, 6, 9, 0.88);
+  --glass-border:      rgba(255, 255, 255, 0.07);
+
+  --btn-outline-color: #f1f5f9;
+  --btn-outline-bg:    rgba(255, 255, 255, 0.04);
+  --btn-outline-border:rgba(255, 255, 255, 0.1);
+  --btn-outline-hover-bg: rgba(255, 255, 255, 0.08);
+  --btn-outline-hover-border: rgba(255, 255, 255, 0.2);
+
+  --grid-color:        rgba(99, 102, 241, 0.025);
+  --scrollbar-track:   #060609;
+}
+
+/* ─── Reset & Base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99,102,241,0.4) var(--scrollbar-track);
+  transition: background-color 0.35s ease;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.4); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.35s ease, color 0.2s ease;
+}
+
+::selection { background: rgba(99,102,241,0.25); color: inherit; }
+
+/* ─── Layout Utilities ──────────────────────────────────────── */
+@layer utilities {
+  .section-padding { padding: 7rem 0; }
+
+  .container-custom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+}
+
+/* ─── Component Layer ────────────────────────────────────────── */
+@layer components {
+
+  /* Glass surface */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid var(--glass-border);
+    transition: background 0.35s ease, border-color 0.35s ease;
+  }
+
+  /* Standard card */
+  .card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 1.25rem;
+    box-shadow: var(--card-shadow);
+    transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s cubic-bezier(0.34,1.56,0.64,1), transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .card-hover:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: var(--card-shadow-hover);
+    transform: translateY(-5px) scale(1.008);
+  }
+  .card-hover {
+    will-change: transform;
+  }
+
+  /* Primary gradient button */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #fff;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    box-shadow: 0 4px 20px rgba(99,102,241,0.35);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(99,102,241,0.55);
+  }
+  .btn-primary:active { transform: scale(0.97); }
+
+  /* Outline ghost button */
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--btn-outline-color);
+    background: var(--btn-outline-bg);
+    border: 1px solid var(--btn-outline-border);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
+  }
+  .btn-outline:hover {
+    background: var(--btn-outline-hover-bg);
+    border-color: var(--btn-outline-hover-border);
+    transform: translateY(-2px);
+  }
+
+  /* Section label pill */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+    border: 1px solid rgba(99, 102, 241, 0.22);
+    margin-bottom: 1rem;
+  }
+  .dark .section-label { color: #a78bfa; }
+
+  /* Text gradients */
+  .text-gradient {
+    background: linear-gradient(135deg, #6366f1 0%, #a78bfa 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-heading {
+    background: linear-gradient(180deg, var(--color-text) 0%, rgba(10,10,10,0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .dark .text-gradient-heading {
+    background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.72) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-white {
+    background: linear-gradient(180deg, #0a0a0a 0%, rgba(10,10,10,0.72) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .dark .text-gradient-white {
+    background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.72) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Cursor glow */
+  .cursor-glow {
+    pointer-events: none;
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%);
+    filter: blur(40px);
+    z-index: 0;
+    top: 0;
+    left: 0;
+    will-change: transform;
+  }
+
+  /* Skill bar */
+  .skill-bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0s;
+  }
+
+  /* Input fields */
+  .input-field {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    outline: none;
+  }
+  .input-field::placeholder { color: var(--color-text-dim); }
+  .input-field:focus {
+    border-color: rgba(99,102,241,0.5);
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+  }
+
+  /* Section dividers */
+  .section-divider {
+    height: 1px;
+    position: relative;
+    background: linear-gradient(90deg, transparent 0%, rgba(99,102,241,0.22) 30%, rgba(139,92,246,0.18) 70%, transparent 100%);
+    margin: 0;
+    overflow: visible;
+  }
+  .section-divider::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 25%; right: 25%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(99,102,241,0.35), transparent);
+    filter: blur(1px);
+  }
+
+  /* Alternating section background — surfaces */
+  .section-alt {
+    background-color: var(--color-surface);
+  }
+}
+
+/* ─── Animation Keyframes ────────────────────────────────────── */
+
+/* Gentle blob drift */
+@keyframes blob-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.06); }
+  66%       { transform: translate(-20px, 15px) scale(0.97); }
+}
+@keyframes blob-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(-25px, 20px) scale(1.05); }
+  66%       { transform: translate(20px, -18px) scale(0.96); }
+}
+@keyframes blob-3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%       { transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* Profile float */
+@keyframes float-profile {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* Card floats — four independent rhythms */
+@keyframes float-1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-8px) rotate(0.5deg); }
+}
+@keyframes float-2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-6px) rotate(-0.5deg); }
+}
+@keyframes float-3 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-10px) rotate(0.3deg); }
+}
+@keyframes float-4 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-7px) rotate(-0.3deg); }
+}
+
+/* Ring rotations */
+@keyframes spin-slow   { from { transform: rotate(0deg); }   to { transform: rotate(360deg); } }
+@keyframes spin-slow-r { from { transform: rotate(0deg); }   to { transform: rotate(-360deg); } }
+
+/* Pulse slow */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* Utility animation classes */
+.animate-blob-1     { animation: blob-1 18s ease-in-out infinite; }
+.animate-blob-2     { animation: blob-2 22s ease-in-out infinite; }
+.animate-blob-3     { animation: blob-3 16s ease-in-out infinite; }
+.animate-float-profile { animation: float-profile 6s ease-in-out infinite; }
+.animate-float-1    { animation: float-1 5s ease-in-out infinite; }
+.animate-float-2    { animation: float-2 6.5s ease-in-out infinite; }
+.animate-float-3    { animation: float-3 7s ease-in-out infinite; }
+.animate-float-4    { animation: float-4 5.5s ease-in-out infinite; }
+.animate-spin-slow  { animation: spin-slow 25s linear infinite; }
+.animate-spin-slow-r { animation: spin-slow-r 18s linear infinite; }
+.animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+
+/* ─── Tailwind alias tokens (used in JSX as className) ────────── */
+/* These map Tailwind token names to CSS vars. */
+@layer base {
+  :root {
+    --tw-bg-background: var(--color-bg);
+  }
+
+  .bg-background  { background-color: var(--color-bg); }
+  .bg-surface     { background-color: var(--color-surface); }
+  .bg-surface-2   { background-color: var(--color-surface-2); }
+  .text-text      { color: var(--color-text); }
+  .text-text-muted { color: var(--color-text-muted); }
+  .text-text-dim  { color: var(--color-text-dim); }
+  .text-accent    { color: #6366f1; }
+  .dark .text-accent { color: #a78bfa; }
+  .bg-accent      { background-color: #6366f1; }
+  .dark .bg-accent { background-color: #8b5cf6; }
+  .border-border  { border-color: var(--color-border); }
+  .bg-hero-gradient {
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,0.12) 0%, transparent 60%);
+  }
+
+  /* Accent opacity shorthands */
+  .bg-accent\/10  { background-color: rgba(99,102,241,0.10); }
+  .bg-accent\/\[0\.03\] { background-color: rgba(99,102,241,0.03); }
+  .border-accent\/20 { border-color: rgba(99,102,241,0.20); }
+  .border-accent\/30 { border-color: rgba(99,102,241,0.30); }
+  .border-accent\/40 { border-color: rgba(99,102,241,0.40); }
+  .border-accent\/50 { border-color: rgba(99,102,241,0.50); }
+  .text-accent\/\[0\.5\] { color: rgba(99,102,241,0.5); }
+  .bg-border      { background-color: var(--color-border); }
+}
