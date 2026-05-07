@@ -90,6 +90,31 @@ export async function POST(req: NextRequest) {
       `,
     });
 
+    await transporter.sendMail({
+      from: `"Shah Meer Portfolio" <${EMAIL_USER}>`,
+      to: email,
+      subject: `Got your message, ${safeName}!`,
+      html: `
+        <div style="font-family:Inter,Arial,sans-serif;max-width:560px;margin:0 auto;background:#0f0f14;color:#e2e8f0;border-radius:12px;overflow:hidden">
+          <div style="background:linear-gradient(135deg,#6366f1,#8b5cf6);padding:28px 36px">
+            <h1 style="margin:0;font-size:20px;font-weight:800;color:#fff">Thanks for reaching out!</h1>
+          </div>
+          <div style="padding:32px 36px">
+            <p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:#cbd5e1">
+              Hi <strong style="color:#e2e8f0">${safeName}</strong>, I've received your message and will get back to you as soon as possible — usually within 24–48 hours.
+            </p>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:16px 20px;margin-top:16px">
+              <p style="margin:0 0 6px;font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;font-weight:600">Your message</p>
+              <p style="margin:0;font-size:13px;color:#94a3b8;line-height:1.7;white-space:pre-wrap">${safeMessage}</p>
+            </div>
+          </div>
+          <div style="padding:16px 36px;background:#0a0a0f;border-top:1px solid rgba(255,255,255,0.05);font-size:11px;color:#475569">
+            Shah Meer · Software Engineer · Lahore, Pakistan
+          </div>
+        </div>
+      `,
+    });
+
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
     console.error("Contact API error:", err);

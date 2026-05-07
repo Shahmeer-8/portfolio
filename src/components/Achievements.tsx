@@ -107,7 +107,7 @@ export default function Achievements() {
 
       <div className="container-custom">
         {/* Heading */}
-        <div className="mb-16 text-center">
+        <div className="mb-10 sm:mb-16 text-center">
           <div className="section-label mx-auto">Recognition</div>
           <h2 className="text-4xl sm:text-5xl font-black text-text">Achievements</h2>
           <div className="w-12 h-0.5 bg-accent mx-auto mt-4" />
@@ -118,7 +118,7 @@ export default function Achievements() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="stat-card card card-hover p-5 text-center"
+              className="stat-card card card-hover p-3 sm:p-5 text-center"
             >
               <div className="text-3xl mb-2">{stat.icon}</div>
               <div className="text-3xl font-black text-gradient mb-1">{stat.value}</div>

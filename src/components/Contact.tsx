@@ -138,7 +138,7 @@ export default function Contact() {
 
       <div className="container-custom">
         {/* Heading */}
-        <div className="mb-16 text-center">
+        <div className="mb-10 sm:mb-16 text-center">
           <div className="section-label mx-auto">Get In Touch</div>
           <h2 className="text-4xl sm:text-5xl font-black text-text">Contact Me</h2>
           <p className="text-text-muted text-sm mt-4 max-w-lg mx-auto">

@@ -93,13 +93,13 @@ export default function About() {
           {/* Image column */}
           <div ref={imageRef} className="flex justify-center lg:justify-end">
             <div className="relative">
-              {/* Decorative rings */}
-              <div className="absolute -inset-5 rounded-3xl pointer-events-none"
+              {/* Decorative rings — hidden on mobile to prevent overflow */}
+              <div className="absolute -inset-5 rounded-3xl pointer-events-none hidden sm:block"
                 style={{ border: "1px solid rgba(99,102,241,0.1)" }} />
-              <div className="absolute -inset-10 rounded-3xl pointer-events-none"
+              <div className="absolute -inset-10 rounded-3xl pointer-events-none hidden sm:block"
                 style={{ border: "1px solid rgba(99,102,241,0.05)" }} />
 
-              <div className="relative w-72 h-72 sm:w-80 sm:h-80 rounded-2xl overflow-hidden card">
+              <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-2xl overflow-hidden card">
                 <Image
                   src="/profile.png"
                   alt="Shah Meer"
@@ -113,7 +113,7 @@ export default function About() {
               </div>
 
               {/* Floating badge */}
-              <div className="absolute -bottom-5 -right-5 card px-4 py-3 shadow-card">
+              <div className="absolute bottom-0 right-0 sm:-bottom-5 sm:-right-5 card px-4 py-3 shadow-card">
                 <div className="text-xs text-text-dim font-mono">Currently at</div>
                 <div className="text-sm font-bold text-text mt-0.5">Multilynx, Lahore</div>
                 <div className="flex items-center gap-1.5 mt-1">

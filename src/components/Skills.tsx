@@ -131,7 +131,7 @@ export default function Skills() {
 
       <div className="container-custom">
         {/* Heading */}
-        <div ref={headingRef} className="mb-16 text-center">
+        <div ref={headingRef} className="mb-10 sm:mb-16 text-center">
           <div className="section-label mx-auto">What I Use</div>
           <h2 className="text-4xl sm:text-5xl font-black text-text">Skills &amp; Stack</h2>
           <div className="w-12 h-0.5 bg-accent mx-auto mt-4" />

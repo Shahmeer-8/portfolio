@@ -108,7 +108,7 @@ export default function Experience() {
 
       <div className="container-custom">
         {/* Heading */}
-        <div className="mb-16 text-center">
+        <div className="mb-10 sm:mb-16 text-center">
           <div className="section-label mx-auto">My Journey</div>
           <h2 className="text-4xl sm:text-5xl font-black text-text">Experience</h2>
           <div className="w-12 h-0.5 bg-accent mx-auto mt-4" />

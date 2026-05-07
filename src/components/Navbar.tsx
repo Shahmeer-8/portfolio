@@ -54,8 +54,9 @@ function MoonIcon() {
 export default function Navbar() {
   const navRef  = useRef<HTMLElement>(null);
   const { theme, toggle } = useTheme();
-  const [scrolled,   setScrolled]   = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled,      setScrolled]      = useState(false);
+  const [mobileOpen,    setMobileOpen]    = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     gsap.fromTo(navRef.current,
@@ -64,7 +65,25 @@ export default function Navbar() {
     );
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+        { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      observers.forEach((o) => o.disconnect());
+    };
   }, []);
 
   const scrollTo = (href: string) => {
@@ -105,10 +124,16 @@ export default function Navbar() {
                 <li key={link.href}>
                   <button
                     onClick={() => scrollTo(link.href)}
-                    className="relative px-2.5 lg:px-3.5 py-2 text-xs lg:text-sm font-medium text-text-muted hover:text-text transition-colors duration-300 group bg-transparent border-0 cursor-pointer rounded-lg hover:bg-white/5 whitespace-nowrap"
+                    className={`relative px-2.5 lg:px-3.5 py-2 text-xs lg:text-sm font-medium transition-colors duration-300 group bg-transparent border-0 cursor-pointer rounded-lg hover:bg-white/5 whitespace-nowrap ${
+                      activeSection === link.href.replace("#", "")
+                        ? "text-accent"
+                        : "text-text-muted hover:text-text"
+                    }`}
                   >
                     {link.label}
-                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-indigo-500 to-purple-500 group-hover:w-4/5 transition-all duration-300 rounded-full" />
+                    <span className={`absolute bottom-1 left-1/2 -translate-x-1/2 h-px bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-300 rounded-full ${
+                      activeSection === link.href.replace("#", "") ? "w-4/5" : "w-0 group-hover:w-4/5"
+                    }`} />
                   </button>
                 </li>
               ))}
@@ -171,7 +196,7 @@ export default function Navbar() {
 
       {/* Mobile full-screen menu */}
       <div
-        className={`fixed inset-0 z-40 glass transition-all duration-300 md:hidden flex flex-col items-center justify-center gap-6 ${
+        className={`fixed inset-0 z-[9999] glass transition-all duration-300 md:hidden flex flex-col items-center justify-center gap-6 ${
           mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >

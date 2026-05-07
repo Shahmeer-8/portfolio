@@ -105,7 +105,7 @@ export default function Shopify() {
 
       <div className="container-custom">
         {/* Heading */}
-        <div className="mb-16 text-center">
+        <div className="mb-10 sm:mb-16 text-center">
           <div className="section-label mx-auto">eCommerce</div>
           <h2 className="text-4xl sm:text-5xl font-black text-text">
             Shopify &amp; WordPress
@@ -117,7 +117,7 @@ export default function Shopify() {
         </div>
 
         {/* Platform badges */}
-        <div className="flex items-center justify-center gap-4 mb-12">
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-10 sm:mb-12">
           {[
             { name: "Shopify", color: "#96BF48", icon: "🛍️" },
             { name: "WordPress", color: "#21759B", icon: "🌐" },
