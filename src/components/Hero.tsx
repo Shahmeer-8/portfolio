@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import TechBackground from '@/components/TechBackground'
 
 const TITLES = ['Full Stack Developer', 'Laravel Expert', 'Next.js Engineer', 'Problem Solver']
 
@@ -45,6 +46,7 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <TechBackground />
 
       {/* DARK MODE BACKGROUND */}
       <div className="absolute inset-0 dark:block hidden">
