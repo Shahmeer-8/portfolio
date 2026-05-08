@@ -18,48 +18,19 @@ export default function About() {
       gsap.fromTo(
         imageRef.current,
         { x: -60, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
-        }
+        { x: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: sectionRef.current, start: "top 75%" } }
       );
       gsap.fromTo(
         contentRef.current,
         { x: 60, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
-        }
+        { x: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: sectionRef.current, start: "top 75%" } }
       );
       gsap.fromTo(
         badgesRef.current?.children ?? [],
         { y: 20, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.5,
-          stagger: 0.1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: badgesRef.current,
-            start: "top 80%",
-          },
-        }
+        { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out", scrollTrigger: { trigger: badgesRef.current, start: "top 80%" } }
       );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
@@ -72,48 +43,35 @@ export default function About() {
 
   return (
     <section id="about" ref={sectionRef} className="section-padding relative overflow-hidden">
-      {/* Faint bg orb */}
       <div
         className="absolute -right-40 top-1/2 -translate-y-1/2 w-96 h-96 rounded-full pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, rgba(108,99,255,0.07) 0%, transparent 70%)",
-          filter: "blur(80px)",
-        }}
+        style={{ background: "radial-gradient(circle, rgba(108,99,255,0.07) 0%, transparent 70%)", filter: "blur(80px)" }}
       />
 
       <div className="container-custom">
-        {/* Section heading */}
         <div className="mb-10 sm:mb-16 text-center">
           <div className="section-label mx-auto">Who I Am</div>
-          <h2 className="text-4xl sm:text-5xl font-black text-text">About Me</h2>
-          <div className="w-12 h-0.5 bg-accent mx-auto mt-4" />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-text">About Me</h2>
+          <div className="w-12 h-0.5 mx-auto mt-4" style={{ background: 'linear-gradient(90deg, #00d4ff, #7c3aed)' }} />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Image column */}
           <div ref={imageRef} className="flex justify-center lg:justify-end">
             <div className="relative">
-              {/* Decorative rings — hidden on mobile to prevent overflow */}
               <div className="absolute -inset-5 rounded-3xl pointer-events-none hidden sm:block"
                 style={{ border: "1px solid rgba(99,102,241,0.1)" }} />
               <div className="absolute -inset-10 rounded-3xl pointer-events-none hidden sm:block"
                 style={{ border: "1px solid rgba(99,102,241,0.05)" }} />
 
-              <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-2xl overflow-hidden card">
-                <Image
-                  src="/profile.png"
-                  alt="Shah Meer"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                {/* Corner accents */}
+              <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-2xl overflow-hidden card mx-auto">
+                <Image src="/profile.png" alt="Shah Meer" fill className="object-cover" priority />
                 <div className="absolute top-0 left-0 w-14 h-14 border-t-2 border-l-2 border-accent/35 rounded-tl-2xl" />
                 <div className="absolute bottom-0 right-0 w-14 h-14 border-b-2 border-r-2 border-accent/35 rounded-br-2xl" />
               </div>
 
               {/* Floating badge */}
-              <div className="absolute bottom-0 right-0 sm:-bottom-5 sm:-right-5 card px-4 py-3 shadow-card">
+              <div className="absolute -bottom-4 -right-4 sm:-bottom-5 sm:-right-5 card px-3 sm:px-4 py-2 sm:py-3 shadow-card">
                 <div className="text-xs text-text-dim font-mono">Currently at</div>
                 <div className="text-sm font-bold text-text mt-0.5">Multilynx, Lahore</div>
                 <div className="flex items-center gap-1.5 mt-1">
@@ -125,9 +83,9 @@ export default function About() {
           </div>
 
           {/* Content column */}
-          <div ref={contentRef} className="space-y-6">
+          <div ref={contentRef} className="space-y-5 sm:space-y-6 mt-8 lg:mt-0">
             <div>
-              <h3 className="text-3xl font-black text-text mb-4 leading-tight">
+              <h3 className="text-2xl sm:text-3xl font-black text-text mb-3 sm:mb-4 leading-tight">
                 Building the web, one{" "}
                 <span className="text-gradient">scalable system</span>{" "}at a time.
               </h3>
@@ -149,13 +107,10 @@ export default function About() {
             </p>
 
             {/* Highlight badges */}
-            <div ref={badgesRef} className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div ref={badgesRef} className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 pt-2">
               {highlights.map((h) => (
-                <div
-                  key={h.text}
-                  className="flex items-center gap-3 p-3 rounded-xl card card-hover group"
-                >
-                  <span className="text-xl">{h.icon}</span>
+                <div key={h.text} className="flex items-center gap-3 p-3 rounded-xl card card-hover group">
+                  <span className="text-xl flex-shrink-0">{h.icon}</span>
                   <span className="text-xs text-text-muted group-hover:text-text transition-colors duration-300 leading-snug">
                     {h.text}
                   </span>
@@ -164,7 +119,7 @@ export default function About() {
             </div>
 
             {/* Info row */}
-            <div className="flex flex-wrap gap-6 pt-2">
+            <div className="flex flex-wrap gap-4 sm:gap-6 pt-2">
               {[
                 { label: "Location",  value: "Lahore, Pakistan" },
                 { label: "Education", value: "BS CS — GCUF" },
@@ -172,21 +127,31 @@ export default function About() {
               ].map((info) => (
                 <div key={info.label}>
                   <div className="text-xs text-text-dim font-mono uppercase tracking-wider">{info.label}</div>
-                  <div className="text-sm text-text font-medium mt-1">{info.value}</div>
+                  <div className="text-xs sm:text-sm text-text font-medium mt-1 break-all">{info.value}</div>
                 </div>
               ))}
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-2">
               <a
                 href="#contact"
                 onClick={(e) => { e.preventDefault(); document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }); }}
-                className="btn-primary"
+                className="btn-primary w-full sm:w-auto justify-center"
               >
                 Get In Touch
               </a>
-              <a href="/cv.pdf" download className="btn-outline">
+              <a
+                href="/cv.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border-2 dark:border-cyan-400/50 dark:text-cyan-400 dark:hover:bg-cyan-400/10 border-indigo-400/50 text-indigo-600 hover:bg-indigo-50 transition-all duration-300 hover:scale-105 min-h-[44px] w-full sm:w-auto"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
                 Download CV
               </a>
             </div>

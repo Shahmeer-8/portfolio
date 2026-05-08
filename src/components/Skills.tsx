@@ -62,113 +62,67 @@ export default function Skills() {
       gsap.fromTo(
         headingRef.current,
         { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: { trigger: headingRef.current, start: "top 80%" },
-        }
+        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: headingRef.current, start: "top 80%" } }
       );
-
       gsap.fromTo(
         ".skill-card",
         { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: { trigger: cardsRef.current, start: "top 75%" },
-        }
+        { y: 0, opacity: 1, duration: 0.7, stagger: 0.15, ease: "power3.out", scrollTrigger: { trigger: cardsRef.current, start: "top 75%" } }
       );
-
-      // Animate skill bars
       ScrollTrigger.create({
         trigger: cardsRef.current,
         start: "top 70%",
         onEnter: () => {
           document.querySelectorAll(".skill-fill").forEach((bar) => {
             const target = (bar as HTMLElement).dataset.level || "0";
-            gsap.fromTo(
-              bar,
-              { width: "0%" },
-              { width: `${target}%`, duration: 1.5, ease: "power2.out", delay: 0.2 }
-            );
+            gsap.fromTo(bar, { width: "0%" }, { width: `${target}%`, duration: 1.5, ease: "power2.out", delay: 0.2 });
           });
         },
         once: true,
       });
-
-      // Tech pill animation
       gsap.fromTo(
         ".tech-pill",
         { scale: 0.8, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.4,
-          stagger: 0.05,
-          ease: "back.out(1.5)",
-          scrollTrigger: { trigger: ".tech-grid", start: "top 80%" },
-        }
+        { scale: 1, opacity: 1, duration: 0.4, stagger: 0.05, ease: "back.out(1.5)", scrollTrigger: { trigger: ".tech-grid", start: "top 80%" } }
       );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
   return (
     <section id="skills" ref={sectionRef} className="section-padding relative overflow-hidden">
-      {/* Background gradient */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(108,99,255,0.04) 0%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(108,99,255,0.04) 0%, transparent 70%)" }}
       />
 
       <div className="container-custom">
-        {/* Heading */}
         <div ref={headingRef} className="mb-10 sm:mb-16 text-center">
           <div className="section-label mx-auto">What I Use</div>
-          <h2 className="text-4xl sm:text-5xl font-black text-text">Skills &amp; Stack</h2>
-          <div className="w-12 h-0.5 bg-accent mx-auto mt-4" />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-text">Skills &amp; Stack</h2>
+          <div className="w-12 h-0.5 mx-auto mt-4" style={{ background: 'linear-gradient(90deg, #00d4ff, #7c3aed)' }} />
         </div>
 
         {/* Skill cards */}
-        <div ref={cardsRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
           {skillCategories.map((cat) => (
-            <div
-              key={cat.label}
-              className="skill-card card card-hover p-6"
-            >
-              {/* Card header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div
-                  className="w-2 h-8 rounded-full"
-                  style={{ background: cat.color }}
-                />
-                <h3 className="font-bold text-text text-lg">{cat.label}</h3>
+            <div key={cat.label} className="skill-card card card-hover p-4 sm:p-6">
+              <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                <div className="w-2 h-8 rounded-full flex-shrink-0" style={{ background: cat.color }} />
+                <h3 className="font-bold text-text text-base sm:text-lg">{cat.label}</h3>
               </div>
-
-              {/* Skill bars */}
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {cat.skills.map((skill) => (
                   <div key={skill.name}>
                     <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-sm text-text-muted font-medium">{skill.name}</span>
+                      <span className="text-xs sm:text-sm text-text-muted font-medium">{skill.name}</span>
                       <span className="text-xs font-mono text-text-dim">{skill.level}%</span>
                     </div>
                     <div className="h-1.5 bg-border rounded-full overflow-hidden">
                       <div
                         className="skill-fill h-full rounded-full"
                         data-level={skill.level}
-                        style={{
-                          width: 0,
-                          background: `linear-gradient(90deg, ${cat.color}, ${cat.color}88)`,
-                        }}
+                        style={{ width: 0, background: `linear-gradient(90deg, ${cat.color}, ${cat.color}88)` }}
                       />
                     </div>
                   </div>
@@ -180,20 +134,20 @@ export default function Skills() {
 
         {/* Tech pill cloud */}
         <div>
-          <div className="text-center mb-8">
+          <div className="text-center mb-6 sm:mb-8">
             <span className="text-xs font-mono text-text-dim tracking-widest uppercase">Tech Ecosystem</span>
           </div>
-          <div className="tech-grid flex flex-wrap items-center justify-center gap-3">
+          <div className="tech-grid flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             {techStack.map((tech) => (
               <div
                 key={tech.name}
-                className="tech-pill flex items-center gap-2 px-4 py-2.5 rounded-xl card hover:border-accent/30 transition-all duration-300 cursor-default group" style={{borderRadius: "0.75rem"}}
+                className="tech-pill flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl card hover:border-accent/30 transition-all duration-300 cursor-default group"
               >
                 <div
-                  className="w-2 h-2 rounded-full group-hover:scale-125 transition-transform duration-300"
+                  className="w-2 h-2 rounded-full flex-shrink-0 group-hover:scale-125 transition-transform duration-300"
                   style={{ background: tech.color }}
                 />
-                <span className="text-sm font-medium text-text-muted group-hover:text-text transition-colors duration-300">
+                <span className="text-xs sm:text-sm font-medium text-text-muted group-hover:text-text transition-colors duration-300 whitespace-nowrap">
                   {tech.name}
                 </span>
               </div>

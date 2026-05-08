@@ -86,9 +86,24 @@ export default function Navbar() {
     };
   }, []);
 
+  /* Close mobile menu when pressing Escape */
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMobileOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  /* Prevent body scroll when mobile menu is open */
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   const scrollTo = (href: string) => {
     setMobileOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => {
+      document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
   };
 
   return (
@@ -102,14 +117,13 @@ export default function Navbar() {
         }`}
       >
         <div className="container-custom">
-          {/* Three-zone layout: Logo | Nav | Actions */}
           <div className="flex items-center justify-between gap-4">
 
-            {/* ── LEFT: Logo + Name ── */}
+            {/* Logo */}
             <a
               href="#hero"
               onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-              className="flex items-center gap-2.5 group flex-shrink-0"
+              className="flex items-center gap-2 group flex-shrink-0"
               aria-label="Shah Meer — home"
             >
               <SMLogo />
@@ -118,7 +132,7 @@ export default function Navbar() {
               </span>
             </a>
 
-            {/* ── CENTER: Nav links (desktop) ── */}
+            {/* Desktop nav links */}
             <ul className="hidden md:flex items-center">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -139,15 +153,12 @@ export default function Navbar() {
               ))}
             </ul>
 
-            {/* ── RIGHT: Available badge + theme + resume + hire ── */}
+            {/* Right actions */}
             <div className="flex items-center gap-2 flex-shrink-0">
 
               {/* Available badge — desktop only */}
               <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full border"
-                style={{
-                  background: "rgba(16,185,129,0.07)",
-                  borderColor: "rgba(16,185,129,0.22)",
-                }}>
+                style={{ background: "rgba(16,185,129,0.07)", borderColor: "rgba(16,185,129,0.22)" }}>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
                 <span className="text-[11px] font-mono font-semibold text-emerald-400 tracking-wide whitespace-nowrap">
                   Available
@@ -158,13 +169,13 @@ export default function Navbar() {
               <button
                 onClick={toggle}
                 aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-                className="w-9 h-9 rounded-xl flex items-center justify-center text-text-muted hover:text-accent hover:bg-accent/10 transition-all duration-300 border border-border"
+                className="w-9 h-9 rounded-xl flex items-center justify-center text-text-muted hover:text-accent hover:bg-accent/10 transition-all duration-300 border border-border flex-shrink-0"
               >
                 {theme === "dark" ? <SunIcon /> : <MoonIcon />}
               </button>
 
-              {/* Resume — desktop */}
-              <a href="/cv.pdf" download
+              {/* Resume — desktop only */}
+              <a href="/cv.pdf" target="_blank" rel="noopener noreferrer"
                 className="hidden md:inline-flex btn-outline py-2 px-4 text-sm gap-1.5">
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -173,62 +184,83 @@ export default function Navbar() {
                 Resume
               </a>
 
-              {/* Hire Me — desktop */}
+              {/* Hire Me — desktop only */}
               <button onClick={() => scrollTo("#contact")}
                 className="hidden md:inline-flex btn-primary py-2 px-4 text-sm">
                 Hire Me
               </button>
 
-              {/* Hamburger — mobile */}
+              {/* Hamburger — mobile only */}
               <button
-                className="md:hidden flex flex-col gap-1.5 p-2 ml-1"
+                className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded-lg border border-border hover:bg-white/5 transition-all duration-300"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                aria-label="Toggle menu"
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileOpen}
               >
-                <span className={`block w-5 h-0.5 bg-current text-text-muted transition-all duration-300 ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
-                <span className={`block w-5 h-0.5 bg-current text-text-muted transition-all duration-300 ${mobileOpen ? "opacity-0" : ""}`} />
-                <span className={`block w-5 h-0.5 bg-current text-text-muted transition-all duration-300 ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+                <span className={`block w-5 h-0.5 bg-current text-text-muted transition-all duration-300 origin-center ${mobileOpen ? "rotate-45 translate-y-2" : ""}`} />
+                <span className={`block w-5 h-0.5 bg-current text-text-muted transition-all duration-300 ${mobileOpen ? "opacity-0 scale-x-0" : ""}`} />
+                <span className={`block w-5 h-0.5 bg-current text-text-muted transition-all duration-300 origin-center ${mobileOpen ? "-rotate-45 -translate-y-2" : ""}`} />
               </button>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile full-screen menu */}
+      {/* Mobile fullscreen overlay */}
       <div
-        className={`fixed inset-0 z-[9999] glass transition-all duration-300 md:hidden flex flex-col items-center justify-center gap-6 ${
+        className={`fixed inset-0 z-[9999] md:hidden flex flex-col transition-all duration-300 ${
           mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
+        style={{ background: "var(--glass-bg)", backdropFilter: "blur(24px)" }}
       >
-        <button
-          onClick={() => setMobileOpen(false)}
-          className="absolute top-5 right-5 w-10 h-10 rounded-full border border-border flex items-center justify-center text-text-muted hover:text-text hover:border-accent/40 transition-all"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-        {/* Available badge in mobile menu */}
-        {/* <div className="flex items-center gap-1.5 px-4 py-2 rounded-full border mb-2"
-          style={{ background: "rgba(16,185,129,0.07)", borderColor: "rgba(16,185,129,0.22)" }}>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-xs font-mono font-semibold text-emerald-400">Available for Work</span>
-        </div> */}
-
-        {navLinks.map((link) => (
-          <button
-            key={link.href}
-            onClick={() => scrollTo(link.href)}
-            className="text-2xl font-bold text-text-muted hover:text-text transition-colors duration-300 bg-transparent border-0 cursor-pointer"
+        {/* Close button */}
+        <div className="flex items-center justify-between px-4 py-4 border-b border-border">
+          <a
+            href="#hero"
+            onClick={(e) => { e.preventDefault(); setMobileOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+            className="flex items-center gap-2"
           >
-            {link.label}
+            <SMLogo />
+            <span className="font-bold text-sm text-text-muted">Shah Meer</span>
+          </a>
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="w-10 h-10 rounded-xl border border-border flex items-center justify-center text-text-muted hover:text-text hover:border-accent/40 transition-all"
+            aria-label="Close menu"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
-        ))}
+        </div>
 
-        <div className="flex flex-col gap-3 w-52 mt-4">
-          <a href="/cv.pdf" download className="btn-outline text-center">Download Resume</a>
-          <button onClick={() => scrollTo("#contact")} className="btn-primary">Hire Me</button>
+        {/* Nav links */}
+        <div className="flex flex-col flex-1 justify-center items-center gap-2 px-6">
+          {navLinks.map((link) => (
+            <button
+              key={link.href}
+              onClick={() => scrollTo(link.href)}
+              className={`w-full max-w-xs text-center py-4 text-xl font-bold transition-colors duration-300 bg-transparent border-0 cursor-pointer rounded-xl hover:bg-white/5 ${
+                activeSection === link.href.replace("#", "") ? "text-accent" : "text-text-muted hover:text-text"
+              }`}
+            >
+              {link.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Bottom actions */}
+        <div className="px-6 pb-10 flex flex-col gap-3">
+          <div className="flex items-center justify-center gap-1.5 py-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-xs text-emerald-400 font-medium font-mono">Available for Work</span>
+          </div>
+          <a href="/cv.pdf" target="_blank" rel="noopener noreferrer" className="btn-outline text-center justify-center">
+            Download Resume
+          </a>
+          <button onClick={() => scrollTo("#contact")} className="btn-primary justify-center">
+            Hire Me
+          </button>
         </div>
       </div>
     </>
